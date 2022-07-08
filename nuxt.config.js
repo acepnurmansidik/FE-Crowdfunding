@@ -49,7 +49,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://localhost:8080/api/',
+    baseURL: 'http://localhost:8080',
   },
 
   auth: {
@@ -57,13 +57,13 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: '/v1/sessions',
+            url: '/api/v1/sessions',
             method: 'post',
             propertyName: 'data.token',
           },
           loggout: false,
           user: {
-            url: '/v1/users/fetch',
+            url: '/api/v1/users/fetch',
             method: 'get',
             propertyName: 'data',
           },
