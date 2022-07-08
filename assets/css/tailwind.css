@@ -148,3 +148,8 @@ footer {
   background-position: top right;
   background-repeat: no-repeat;
 }
+
+.item-image img {
+  height: 300px;
+  width: 100%;
+}

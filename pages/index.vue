@@ -106,15 +106,13 @@
                 :src="$axios.defaults.baseURL + '/' + campaign.image_url"
                 alt="thumbnail"
                 class="rounded-20 w-full"
-                height="20px"
-                width="30px"
               />
             </figure>
             <div class="item-meta">
               <h4 class="text-3xl font-medium text-gray-900 mt-5">
                 {{ campaign.name }}
               </h4>
-              <p class="text-md font-light text-gray-900 h-12">
+              <p class="text-md font-light text-gray-900 h-10">
                 {{ campaign.short_description }}
               </p>
               <div class="relative pt-4 progress-bar">
