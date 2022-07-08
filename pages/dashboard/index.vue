@@ -62,7 +62,7 @@
             </div>
             <div class="flex items-center">
               <nuxt-link
-                :to="'/dashboard/detail/' + i"
+                :to="'/dashboard/projects/' + i"
                 class="bg-green-button text-white py-2 px-4 rounded"
               >
                 Detail
