@@ -39,7 +39,6 @@
           <div class="mb-4">
             <button
               @click="userLogin"
-              type="submit"
               class="block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
             >
               Sign In
@@ -73,9 +72,8 @@ export default {
   methods: {
     async userLogin() {
       try {
-        let response = await this.$auth.loginWith('local', {
-          data: this.login,
-        })
+        let response = await this.$auth.loginWith('local', { data: this.login })
+        this.$auth.setUser(response.data.data)
         console.log(response)
       } catch (err) {
         console.log(err)
