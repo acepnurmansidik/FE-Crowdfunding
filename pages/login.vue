@@ -60,6 +60,25 @@
 <script>
 export default {
   layout: 'auth',
+  data() {
+    return {
+      login: {
+        email: '',
+        password: '',
+      },
+    }
+  },
+  methods: {
+    async userLogin() {
+      try {
+        let response = await this.$auth.loginWith('local', { data: this.login })
+        this.$auth.setUser(response.data.data)
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+      }
+    },
+  },
 }
 </script>
 
