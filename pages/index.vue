@@ -7,8 +7,10 @@
         <div class="flex items-center pt-10 px-5 md:px-0">
           <div class="w-1/2">
             <h1 class="text-4xl text-white mb-5">
-              We helps <u class="hero-underline">startup</u> to <br />
-              getting started & <u class="hero-underline">funding</u> <br />
+              We helps <u class="hero-underline">startup</u> to
+              <br />
+              getting started &
+              <u class="hero-underline">funding</u> <br />
               their truly needs
             </h1>
             <p class="text-white text-xl font-light mb-8">
@@ -98,13 +100,13 @@
         <div
           v-for="campaign in campaigns"
           :key="campaign.id"
-          class="card-project p-5 my-4 p-5 border border-gray-500 rounded-20"
+          class="card-project w-full p-5 border border-gray-500 rounded-20"
         >
           <div class="item">
             <figure class="item-image">
               <img
                 :src="$axios.defaults.baseURL + '/' + campaign.image_url"
-                alt="thumbnail"
+                alt=""
                 class="rounded-20 w-full"
               />
             </figure>
@@ -112,7 +114,7 @@
               <h4 class="text-3xl font-medium text-gray-900 mt-5">
                 {{ campaign.name }}
               </h4>
-              <p class="text-md font-light text-gray-900 h-10">
+              <p class="text-md font-light text-gray-900 h-12">
                 {{ campaign.short_description }}
               </p>
               <div class="relative pt-4 progress-bar">
@@ -121,7 +123,7 @@
                 >
                   <div
                     :style="
-                      'width ' +
+                      'width: ' +
                       (campaign.current_amount / campaign.goal_amount) * 100 +
                       '%'
                     "
@@ -134,16 +136,22 @@
                   {{ (campaign.current_amount / campaign.goal_amount) * 100 }}%
                 </div>
                 <div class="ml-auto font-semibold">
-                  Rp {{ new Intl.NumberFormat().format(campaign.goal_amount) }}
+                  Rp
+                  {{ new Intl.NumberFormat().format(campaign.goal_amount) }}
                 </div>
               </div>
             </div>
-            <nuxt-link
-              :to="/projects/ + campaign.id"
+            <button
+              @click="
+                $router.push({
+                  name: 'projects-id',
+                  params: { id: campaign.id },
+                })
+              "
               class="text-center mt-5 button-cta block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-2 text-lg rounded-full"
             >
               Fund Now
-            </nuxt-link>
+            </button>
           </div>
         </div>
       </div>
@@ -195,7 +203,7 @@
     </section>
     <div class="cta-clip -mt-20"></div>
     <CallToAction />
-    <Footer></Footer>
+    <Footer />
   </div>
 </template>
 
