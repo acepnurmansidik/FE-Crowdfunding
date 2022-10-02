@@ -42,8 +42,8 @@
             <div class="flex mt-3">
               <div class="w-1/4">
                 <img
-                  src="/testimonial-1-icon.png"
-                  alt=""
+                  :src="$axios.defaults.baseURL + '/' + campaign.user.image_url"
+                  alt="image-project-leader"
                   class="w-full inline-block rounded-full"
                 />
               </div>
