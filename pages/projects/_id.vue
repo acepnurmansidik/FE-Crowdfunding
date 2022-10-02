@@ -10,50 +10,22 @@
         <div class="w-3/4 mr-6">
           <div class="bg-white p-3 mb-3 border border-gray-400 rounded-20">
             <figure class="item-image">
-              <img src="/project-image.jpg" alt="" class="rounded-20 w-full" />
+              <img :src="default_image" alt="" class="rounded-20 w-full" />
             </figure>
           </div>
           <div class="flex -mx-2">
             <div
+              v-for="image in campaign.images"
+              :key="image.image_url"
               class="relative w-1/4 bg-white m-2 p-2 border border-gray-400 rounded-20"
             >
               <figure class="item-thumbnail">
                 <img
-                  src="/project-slider-1.jpg"
-                  alt=""
-                  class="rounded-20 w-full"
-                />
-              </figure>
-            </div>
-            <div
-              class="relative w-1/4 bg-white m-2 p-2 border border-gray-400 rounded-20"
-            >
-              <figure class="item-thumbnail">
-                <img
-                  src="/project-slider-2.jpg"
-                  alt=""
-                  class="rounded-20 w-full"
-                />
-              </figure>
-            </div>
-            <div
-              class="relative w-1/4 bg-white m-2 p-2 border border-gray-400 rounded-20"
-            >
-              <figure class="item-thumbnail">
-                <img
-                  src="/project-slider-3.jpg"
-                  alt=""
-                  class="rounded-20 w-full"
-                />
-              </figure>
-            </div>
-            <div
-              class="relative w-1/4 bg-white m-2 p-2 border border-gray-400 rounded-20"
-            >
-              <figure class="item-thumbnail">
-                <img
-                  src="/project-slider-4.jpg"
-                  alt=""
+                  :src="$axios.defaults.baseURL + '/' + image.image_url"
+                  @click="
+                    changeImage($axios.defaults.baseURL + '/' + image.image_url)
+                  "
+                  alt="image"
                   class="rounded-20 w-full"
                 />
               </figure>
@@ -77,19 +49,19 @@
               </div>
               <div class="w-3/4 ml-5 mt-1">
                 <div class="font-semibold text-xl text-gray-800">
-                  Julia Keeva
+                  {{ campaign.user.name }}
                 </div>
                 <div class="font-light text-md text-gray-400">
-                  28.093 backer
+                  {{ campaign.backer_count }}
                 </div>
               </div>
             </div>
 
             <h4 class="mt-5 font-semibold">What will you get:</h4>
             <ul class="list-check mt-3">
-              <li>Equity of the startup directly from the founder</li>
-              <li>Special service or product that startup has</li>
-              <li>You can also sell your equity once the startup going IPO</li>
+              <li v-for="perk in campaign.perks" :key="perk">
+                {{ perk }}
+              </li>
             </ul>
             <input
               type="number"
@@ -111,10 +83,10 @@
       <div class="flex justify-between items-center">
         <div class="w-full md:w-3/4 mr-6">
           <h2 class="text-4xl text-gray-900 mb-2 font-medium">
-            Wireboard Fortune
+            {{ campaign.name }}
           </h2>
           <p class="font-light text-xl mb-5">
-            The new era of mechanical keyboard for everyone
+            {{ campaign.short_description }}
           </p>
 
           <div class="relative progress-bar">
@@ -122,31 +94,31 @@
               class="overflow-hidden mb-4 text-xs flex rounded-full bg-gray-200 h-6"
             >
               <div
-                style="width: 80%"
+                :style="
+                  'width: ' +
+                  (campaign.current_amount / campaign.goal_amount) * 100 +
+                  '%'
+                "
                 class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-progress progress-striped"
               ></div>
             </div>
           </div>
           <div class="flex progress-info mb-6">
-            <div class="text-2xl">80%</div>
-            <div class="ml-auto font-semibold text-2xl">Rp 40.000.000</div>
+            <div class="text-2xl">
+              {{ (campaign.current_amount / campaign.goal_amount) * 100 + '%' }}
+            </div>
+            <div class="ml-auto font-semibold text-2xl">
+              {{
+                new Intl.NumberFormat(['id'], {
+                  style: 'currency',
+                  currency: 'IDR',
+                }).format(campaign.goal_amount)
+              }}
+            </div>
           </div>
 
           <p class="font-light text-xl mb-5">
-            Designed to fit your dedicated typing experience. No matter what you
-            like, linear, clicky or a little in between, we’ve got you covered
-            with three Gateron switches options (Blue, Brown, Red). With a
-            lifespan of 50 million keystroke lifespan we want to make sure that
-            you experience same feedback for every keystroke.
-          </p>
-          <p class="font-light text-xl mb-5">
-            With N-key rollover (NKRO on wired mode only) you can register as
-            many keys as you can press at once without missing out characters.
-            It allows to use all the same media keys as conventional macOS.
-          </p>
-          <p class="font-light text-xl mb-5">
-            This keyboard can last up to 72 hours typing, or up to 9 days of
-            normal use (8 hrs/day) with a 4000 mAh big battery.
+            {{ campaign.description }}
           </p>
         </div>
         <div class="w-1/4 hidden md:block"></div>
@@ -158,4 +130,29 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  async asyncData({ $axios, params }) {
+    const campaign = await $axios.$get(`/api/v1/campaigns/${params.id}`)
+
+    return { campaign: campaign.data }
+  },
+  data() {
+    return {
+      default_image: '',
+    }
+  },
+  methods: {
+    changeImage(url) {
+      this.default_image = url
+    },
+  },
+  mounted() {
+    this.default_image =
+      this.$axios.defaults.baseURL +
+      '/' +
+      this.campaign.images.filter((image) => image.is_primary == true)[0]
+        .image_url
+  },
+}
+</script>
