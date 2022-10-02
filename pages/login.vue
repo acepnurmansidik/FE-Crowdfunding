@@ -73,7 +73,7 @@ export default {
     async userLogin() {
       try {
         let response = await this.$auth.loginWith('local', { data: this.login })
-        this.$auth.setUser(response.data.data)
+        // this.$auth.setUser(response.data.data)
         console.log(response)
       } catch (err) {
         console.log(err)

@@ -1,26 +1,26 @@
 export default {
-  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
-
-  // Target: https://go.nuxtjs.dev/config-target
-  target: 'static',
-
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'BWA Startup',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1',
+      },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap',
       },
     ],
+    bodyAttrs: {
+      class: 'antialiased',
+    },
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -44,18 +44,28 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/auth-next',
+    // https://auth.nuxtjs.org
+    '@nuxtjs/auth',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: 'http://localhost:8080',
   },
 
   auth: {
     strategies: {
       local: {
+        token: {
+          property: 'token',
+          global: true,
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: 'user',
+          autoFetch: true,
+        },
         endpoints: {
           login: {
             url: '/api/v1/sessions',
@@ -69,11 +79,6 @@ export default {
             propertyName: 'data',
           },
         },
-        // tokenRequired: true,
-        // tokenType: 'bearer',
-        // tokenName: 'Authorization',
-        // globalToken: true,
-        // autoFetchUser: false,
       },
     },
   },
