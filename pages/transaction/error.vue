@@ -2,13 +2,20 @@
   <div class="container mx-auto h-screen flex justify-center items-center">
     <div class="w-full lg:w-1/3 px-10 lg:px-0">
       <div class="flex justify-center items-center mx-auto mt-6 mb-8">
-        <img src="../static/funded-illustration.svg" alt="" class="w-full" />
+        <img
+          src="../../static/error-illustration.svg"
+          height="370"
+          width="424"
+          alt=""
+          class="w-full"
+        />
       </div>
-      <h2 class="font-medium mb-3 text-3xl text-center">Yeay! You are super</h2>
+      <h2 class="font-medium mb-3 text-3xl text-center">
+        Oppsss. Something wrong
+      </h2>
       <p class="text-center font-light">
-        Your money has ben transferred
-        <br />
-        into company's account
+        An error occured when processing your transaction <br />
+        Please try again later
       </p>
       <div class="mb-4 mt-6">
         <div class="mb-3">
